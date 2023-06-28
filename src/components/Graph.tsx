@@ -15,12 +15,38 @@ function Graph() {
         dispatch(addX({
             x: Math.round(Math.random() * 100)
         }))
+    }
 
+    const handleClickSin = () => {
+        drawSinGraph()
+    }
+
+    const drawSinGraph = () => {
+        let points = getSinGraphPoint()
+
+        for (let index = 0; index < points.length; index++) {
+            dispatch(addX({
+                x: points[index]
+            }))            
+        }
+
+    }
+
+    const getSinGraphPoint = () => {
+        let t = 100
+        let points = []
+        for (let index = 0; index < t; index++) {
+            points.push(Math.sin(index) * 10)
+        }
+
+        return points
     }
 
     return (
         <div>
             <button onClick={handleClick}>Random X</button>
+            <button onClick={handleClickSin}>Sin Graph</button>
+
             <GraphCanvas></GraphCanvas>
 
         </div>
@@ -30,11 +56,14 @@ function Graph() {
 function GraphCanvas(props: any) {
     const count = useSelector((state: any) => state.graph.value);
     const canvasRef = useRef()
+    const minusLine = 300
 
     useEffect(() => {
         const canvas: any = canvasRef.current
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
+
+        drawMinusLine()
 
         let t = 1
         for (const iterator of count) {
@@ -51,9 +80,20 @@ function GraphCanvas(props: any) {
         let ctx = canvas.getContext('2d');
 
         ctx.beginPath();
-        ctx.arc(t, x, 5, 0, 2*Math.PI);
+        ctx.arc(t, x + minusLine, 5, 0, 2*Math.PI);
         ctx.fill();
     }
+
+    const drawMinusLine = () => {
+        const canvas: any = canvasRef.current
+        let ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.moveTo(0, minusLine);
+        ctx.lineTo(window.innerWidth, minusLine);
+
+        ctx.stroke();
+    }
+
 
 
     return (
