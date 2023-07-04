@@ -5,7 +5,7 @@ type state = {
 }
 
 const initialState: state = {
-    value: [1, 2, 3]
+    value: []
 }
 
 const graphSlice = createSlice({

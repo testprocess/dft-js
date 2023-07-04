@@ -33,10 +33,10 @@ function Graph() {
     }
 
     const getSinGraphPoint = () => {
-        let t = 100
+        let t = 200
         let points = []
         for (let index = 0; index < t; index++) {
-            points.push(Math.sin(index) * 10)
+            points.push((Math.sin(index / 3) * 10) + (Math.sin(index) * 5))
         }
 
         return points
